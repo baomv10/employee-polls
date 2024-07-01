@@ -12,10 +12,9 @@ describe("Questions", () => {
     expect(result.id).toEqual(id);
   });
 
-  it("_getQuestion: should return null", async () => {
+  it("_getQuestion: should throw error", async () => {
     const id = "123";
-    var result = await _getQuestion({ id });
-    expect(result).toBeNull();
+    await expect(_getQuestion(id)).rejects.toEqual("Not Found");
   });
 
   it("_getQuestions: should return result correctly", async () => {

@@ -21,31 +21,32 @@ const UnansweredQuestionDetail = ({ question }) => {
       <div className="text-center">
         <h4>Would You Rather</h4>
       </div>
-
-      <div className="col-6 text-center">
-        <div className="border rounded p-1">
-          <p> {question?.optionOne?.text}</p>
+      <div className="row mt-5">
+        <div className="col-6 text-center">
+          <div className="border rounded p-1">
+            <p> {question?.optionOne?.text}</p>
+          </div>
+          <div className="d-grid">
+            <button
+              className="btn btn-success"
+              onClick={(e) => answerQuestion(question, "optionOne")}
+            >
+              Click
+            </button>
+          </div>
         </div>
-        <div className="d-grid">
-          <button
-            className="btn btn-success"
-            onClick={(e) => answerQuestion(question, "optionOne")}
-          >
-            Click
-          </button>
-        </div>
-      </div>
-      <div className="col-6 text-center">
-        <div className="border rounded p-1">
-          <p> {question?.optionTwo?.text}</p>
-        </div>
-        <div className="d-grid">
-          <button
-            className="btn btn-success"
-            onClick={(e) => answerQuestion(question, "optionTwo")}
-          >
-            Click
-          </button>
+        <div className="col-6 text-center">
+          <div className="border rounded p-1">
+            <p> {question?.optionTwo?.text}</p>
+          </div>
+          <div className="d-grid">
+            <button
+              className="btn btn-success"
+              onClick={(e) => answerQuestion(question, "optionTwo")}
+            >
+              Click
+            </button>
+          </div>
         </div>
       </div>
     </>

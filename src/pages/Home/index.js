@@ -11,29 +11,23 @@ import {
 } from "../../stores/slices/questions.slice";
 import QuestionCard from "../../components/QuestionCard";
 
-const CATEGORIES = [
-  { key: "unanswered", title: "Unanswered" },
-  { key: "answered", title: "Answered" },
-];
-
 const Home = () => {
   const dispatch = useDispatch();
 
   const userLogin = useSelector(userLoginSelector);
   const allQuestions = useSelector(allQuestionsSelector);
   const currentUserInfo = useSelector(currentUserInfoSelector);
-  const [homeData, setHomeData] = useState({});
+  const [tabIndex, setTabIndex] = useState(0);
+  const [answered, setAnswered] = useState([]);
+  const [unanswered, setUnanswered] = useState([]);
   useEffect(() => {
     if (!allQuestions || !userLogin || !currentUserInfo) return;
     const answers = Object.keys(currentUserInfo.answers);
     const questions = Object.values(allQuestions);
     const answered = questions.filter((x) => answers.includes(x.id));
     const unanswered = questions.filter((x) => !answers.includes(x.id));
-
-    setHomeData({
-      unanswered,
-      answered,
-    });
+    setAnswered(answered.sort((a, b) => b.timestamp - a.timestamp));
+    setUnanswered(unanswered.sort((a, b) => b.timestamp - a.timestamp));
   }, [allQuestions, currentUserInfo, userLogin]);
 
   useEffect(() => {
@@ -47,20 +41,42 @@ const Home = () => {
 
   return (
     <>
-      {CATEGORIES.map((category) => (
-        <div className="card my-5" key={category.key}>
-          <div className="card-header text-center">
-            <h4>{category.title}</h4>
+      <ul className="nav nav-tabs mt-5">
+        <li className="nav-item">
+          <a
+            onClick={() => setTabIndex(0)}
+            className={"nav-link " + (tabIndex === 0 ? "active" : "")}
+            href="#"
+          >
+            Unanswered
+          </a>
+        </li>
+        <li className="nav-item">
+          <a
+            onClick={() => setTabIndex(1)}
+            className={"nav-link " + (tabIndex === 1 ? "active" : "")}
+            href="#"
+          >
+            Answered
+          </a>
+        </li>
+      </ul>
+      <div className="border border-top-0 p-5">
+        {tabIndex === 0 && (
+          <div className="row">
+            {unanswered?.map((question) => (
+              <QuestionCard key={question.id} question={question} />
+            ))}
           </div>
-          <div className="card-body">
-            <div className="row">
-              {homeData[category.key]?.map((question) => (
-                <QuestionCard key={question.id} question={question} />
-              ))}
-            </div>
+        )}
+        {tabIndex === 1 && (
+          <div className="row">
+            {answered?.map((question) => (
+              <QuestionCard key={question.id} question={question} />
+            ))}
           </div>
-        </div>
-      ))}
+        )}
+      </div>
     </>
   );
 };

@@ -256,10 +256,14 @@ export function _getUser({ id }) {
 }
 
 export function _getQuestion({ id }) {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     setTimeout(() => {
-      const question = questions[id] || null;
-      resolve(question);
+      const question = questions[id];
+      if (question) {
+        resolve(question);
+      } else {
+        reject("Not Found");
+      }
     }, 1000);
   });
 }

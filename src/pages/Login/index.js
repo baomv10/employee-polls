@@ -5,10 +5,11 @@ import {
   errorLoginSelector,
 } from "../../stores/slices/users.slice";
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Login = () => {
-  let navigate = useNavigate();
+  const navigate = useNavigate();
+  const { state } = useLocation();
   const userLogin = useSelector(userLoginSelector);
   const errorLogin = useSelector(errorLoginSelector);
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ const Login = () => {
 
   useEffect(() => {
     if (userLogin) {
-      return navigate("/");
+      return navigate(state?.path || "/");
     }
   }, [userLogin]);
 

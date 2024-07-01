@@ -6,6 +6,7 @@ const initialState = {
   currentQuestion: null,
   isAddQuestionSuccess: null,
   isAnswerQuestionSuccess: null,
+  getQuestionError: null,
 };
 
 const questionsSlice = createSlice({
@@ -44,17 +45,21 @@ const questionsSlice = createSlice({
 
     requestGetQuestion(state) {
       state.currentQuestion = null;
+      state.getQuestionError = null;
     },
     getQuestionSuccess(state, action) {
       state.currentQuestion = action.payload;
+      state.getQuestionError = null;
     },
-    getQuestionFail(state) {
+    getQuestionFail(state, action) {
       state.currentQuestion = null;
+      state.getQuestionError = action.payload;
     },
 
     resetQuestionStore(state) {
       state.isAnswerQuestionSuccess = null;
       state.isAddQuestionSuccess = null;
+      state.getQuestionError = null;
     },
   },
 });
@@ -77,6 +82,11 @@ export const isAnswerQuestionSuccessSelector = createDraftSafeSelector(
 export const currentQuestionSelector = createDraftSafeSelector(
   selectSelf,
   (state) => state.currentQuestion
+);
+
+export const getQuestionErrorSelector = createDraftSafeSelector(
+  selectSelf,
+  (state) => state.getQuestionError
 );
 
 export const {

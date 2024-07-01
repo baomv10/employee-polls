@@ -1,6 +1,7 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   currentQuestionSelector,
+  getQuestionErrorSelector,
   isAnswerQuestionSuccessSelector,
   requestGetQuestion,
   resetQuestionStore,
@@ -16,19 +17,26 @@ import AnsweredQuestionDetail from "../../components/AnsweredQuestionDetail";
 import UnansweredQuestionDetail from "../../components/UnansweredQuestionDetail";
 
 const QuestionDetail = () => {
+  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { question_id } = useParams();
-
+  
+  const getQuestionError = useSelector(getQuestionErrorSelector);
   const currentQuestion = useSelector(currentQuestionSelector);
   const isAnswerQuestionSuccess = useSelector(isAnswerQuestionSuccessSelector);
   const userLogin = useSelector(userLoginSelector);
   const currentUserInfo = useSelector(currentUserInfoSelector);
-
   useEffect(() => {
     return () => {
       dispatch(resetQuestionStore());
     };
   }, []);
+
+  useEffect(() => {
+    if (getQuestionError ) {
+      return navigate("404");
+    }
+  }, [getQuestionError]);
 
   useEffect(() => {
     if (!isAnswerQuestionSuccess) return;

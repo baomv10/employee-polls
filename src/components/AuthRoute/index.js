@@ -6,7 +6,7 @@ const AuthRoute = ({ children }) => {
   const userLogin = useSelector(userLoginSelector);
   const location = useLocation();
   if (!userLogin) {
-    return <Navigate to="/login" state={{ from: location }} replace />;
+    return <Navigate to="/login" state={{ path: location.pathname }} replace />;
   } else {
     return children;
   }
