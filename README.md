@@ -1,7 +1,17 @@
 
+## Project description
+
+In the "Employee Polls" Project, build a web app that lets an employee create polls for coworkers. The process goes like this: An employee is asked a question in the form: “Would you rather [option A] or [option B] ?”. Answering "neither" or "both" is not possible.
+
+In app, users will be able to answer polls, see which polls they haven’t answered, see how other people have voted, post polls, and see the ranking of users on the leaderboard.
+
 ## Available Scripts
 
 In the project directory, you can run:
+
+### `npm install`
+
+To download all dependencies for the project
 
 ### `npm start`
 
